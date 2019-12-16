@@ -10,10 +10,10 @@ class DatabaseTester extends React.Component {
     // TO LOG IN
     handleClear = () => {
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').get().then(function(querySnapshot){
+        fireStore.collection('wireframes').get().then(function(querySnapshot){
             querySnapshot.forEach(function(doc) {
                 console.log("deleting " + doc.id);
-                fireStore.collection('todoLists').doc(doc.id).delete();
+                ('wireframes').doc(doc.id).delete();
             })
         });
     }
@@ -21,7 +21,7 @@ class DatabaseTester extends React.Component {
     handleReset = () => {
         const fireStore = getFirestore();
         todoJson.todoLists.forEach(todoListJson => {
-            fireStore.collection('todoLists').add({
+            fireStore.collection('wireframes').add({
                     name: todoListJson.name,
                     owner: todoListJson.owner,
                     items: todoListJson.items,

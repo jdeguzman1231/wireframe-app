@@ -6,34 +6,54 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 
 class ItemsList extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         console.log("Rendering itemsList");
-        let todoList = this.props.todoList
-        let items = todoList.items;
+        console.log("hi");
+        let select = this.props.selectControl;
+        let currentDiv;
+        let controlArray = this.props.controls;
+
+
+
 
         return (
-            <div className="todo-lists section grey lighten-1">
-                {items && items.map(function (item) {
-                    item.id = item.key;
+            <div>
+                {controlArray && controlArray.map(function(control) {
+                    let name = control.name;
+                    if (name == "container") {
+                        currentDiv = "container_object_editable" 
+                    }
+                    else if (name == "label") {
+                        currentDiv = "label_object_editable"
+                    }
+                    else if (name == "button") {
+                        currentDiv = "button_object_editable"
+                    }
+                    else if (name == "textfield") {
+                        currentDiv = "textfield_object_editable"
+                    }
+                
                     return (
-                        <Link key={item.key} to={{
-                            pathname: '/todoList/' + todoList.id + '/item/' + item.key,
-                            list: { item }
-                        }} >
-                            <ItemCard todoList={todoList} item={item} key={item.key} />
-                        </Link>
+                        <div className = {currentDiv} onClick = {select.bind(this, control)} ></div>
                     );
-                })
                 }
-                <div onClick={this.props.addItem} className="card item_card z-depth-2 hoverable rounded center-align grey-text text-darken-3">
-                    <div className="card-content center-align"><
-                        i style={{ verticalAlign: "middle", fontSize: '40px' }} className="material-icons">add</i>
-                    </div>
-                </div>
-            </div>
+                    
+                    )}
+        </div>
         );
-    }
+        
+    
+        
+
 }
+}
+
+        
+
 
 const mapStateToProps = (state, ownProps) => {
     const todoList = ownProps.todoList;
@@ -43,9 +63,10 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default compose(
-    connect(mapStateToProps),
-    firestoreConnect([
-        { collection: 'todoLists' },
-    ]),
-)(ItemsList);
+// export default compose(
+//     connect(mapStateToProps),
+//     firestoreConnect([
+//         { collection: 'todoLists' },
+//     ]),
+// )
+export default (ItemsList);

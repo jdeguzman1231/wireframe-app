@@ -35,7 +35,9 @@ div.banner {
   margin-top: 30px;
   margin-bottom: 50px;
 }
-
+.test{
+  position: relative;
+}
 .button_control {
   margin-bottom: 50px;
 }
@@ -57,18 +59,27 @@ div.banner {
   border-color: black;
 }
 
-.default_container{
-  height: 400px;
-  width: 400px;
+/* #workspace_div{
+  height: 450px;
+  width: 450px;
   background-color: white;
   margin: 30px auto auto;
   border-style: solid;
   border-color: black;
-}
+} */
+
+/* .default_container{
+  height: 450px;
+  width: 450px;
+  background-color: white;
+  margin: 30px auto auto;
+  border-style: solid;
+  border-color: black;
+} */
 
 .container_object {
-  width:200px;
-  height:100px;
+  width:100px;
+  height:50px;
   background:whitesmoke;
   padding-left: 20px;
   margin: auto;
@@ -76,6 +87,27 @@ div.banner {
   border-color: black;
 }
 
+.container_object_editable {
+  float: left;
+  position: absolute;
+  width:100px;
+  height:50px;
+  background:whitesmoke;
+  padding-left: 20px;
+  border-style: solid;
+  border-color: black;
+}
+
+.button_object_editable {
+  width: 200px;
+  height: 30px;
+  background: whitesmoke;
+  text-align: center;
+  border-style: solid;
+  border-color: black;
+  position: absolute;
+  float: left;
+}
 .button_object {
   width: 200px;
   height: 30px;
@@ -86,6 +118,13 @@ div.banner {
   border-color: black;
 }
 
+.workspace_dimensions_container {
+  margin: auto;
+}
+
+.workspace-dimension {
+  width: 200px;
+}
 .textfield_object {
   width: 200px;
   height: 30px;
@@ -94,6 +133,22 @@ div.banner {
   border-color: #111111;
   border-width: 2px;
   margin: auto;
+  border-style: solid;
+  border-color: black;
+}
+
+.textfield_object_editable {
+  width: 200px;
+  height: 30px;
+  background: white;
+  text-align: left;
+  border-color: #111111;
+  border-width: 2px;
+  border-style: solid;
+  border-color: black;
+  position: absolute;
+}
+.font_size_input {
   border-style: solid;
   border-color: black;
 }

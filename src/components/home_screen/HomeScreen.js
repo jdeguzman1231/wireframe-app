@@ -17,7 +17,7 @@ class HomeScreen extends Component {
             time: Date.now(),
         }
         const fireStore = getFirestore();
-        let newList = fireStore.collection("todoLists").doc();
+        let newList = fireStore.collection("wireframes").doc();
         newList.set(newWireframeData);
 
         this.props.history.push({
@@ -82,6 +82,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-        { collection: 'todoLists', orderBy: ["time", "desc"] },
+        { collection: 'wireframes', orderBy: ["time", "desc"] },
     ]),
 )(HomeScreen);

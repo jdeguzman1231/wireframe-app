@@ -57,7 +57,7 @@ class ItemCard extends React.Component {
     updateFirestoreList = (list) => {
         let updatedList = this.updateKeys(list)
         let fireStore = getFirestore();
-        fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: updatedList })
+        fireStore.collection("wireframes").doc(this.props.todoList.id).update({ items: updatedList })
     }
 
     render() {

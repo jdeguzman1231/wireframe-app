@@ -51,7 +51,7 @@ class ItemScreen extends Component {
 
         console.log(items);
         let fireStore = getFirestore();
-        fireStore.collection("todoLists").doc(this.props.todoList.id).update({ items: items });
+        fireStore.collection("wireframes").doc(this.props.todoList.id).update({ items: items });
         this.goBack();
     }
 
@@ -147,9 +147,9 @@ class ItemScreen extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     const { id } = ownProps.match.params;
-    const { todoLists } = state.firestore.data;
+    const { wireframes } = state.firestore.data;
     let { itemid } = ownProps.match.params;
-    const todoList = todoLists ? todoLists[id] : null;
+    const todoList = wireframes ? wireframes[id] : null;
 
     if (todoList)
         todoList.id = id;
@@ -170,6 +170,6 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-        { collection: 'todoLists' },
+        { collection: 'wireframes' },
     ]),
 )(ItemScreen);

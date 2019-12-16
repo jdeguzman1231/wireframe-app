@@ -6,11 +6,11 @@ import TodoListCard from './TodoListCard';
 
 class TodoListLinks extends React.Component {
     render() {
-        const todoLists = this.props.todoLists;
-        console.log(todoLists);
+        const wireframes = this.props.wireframes;
+        console.log(wireframes);
         return (
             <div className="todo-lists section">
-                {todoLists && todoLists.map(todoList => (
+                {wireframes && wireframes.map(todoList => (
                     <Link to={'/todoList/' + todoList.id} key={todoList.id}>
                         <TodoListCard todoList={todoList} />
                     </Link>
@@ -22,7 +22,7 @@ class TodoListLinks extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        todoLists: state.firestore.ordered.todoLists,
+        wireframes: state.firestore.ordered.wireframes,
         auth: state.firebase.auth,
     };
 };
