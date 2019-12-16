@@ -13,16 +13,16 @@ class HomeScreen extends Component {
         let newWireframeData = {
             name: 'Unnamed wireframe',
             owner: 'Unknown owner',
-            items: [],
+            controls: [],
             time: Date.now(),
         }
         const fireStore = getFirestore();
-        let newList = fireStore.collection("wireframes").doc();
-        newList.set(newWireframeData);
+        let newWireframe = fireStore.collection("wireframes").doc();
+        newWireframe.set(newWireframeData);
 
         this.props.history.push({
-            pathname: "todoList/" + newList.id,
-            key: newList.id,
+            pathname: "wireframe/" + newWireframe.id,
+            key: newWireframe.id,
         });
     }
 

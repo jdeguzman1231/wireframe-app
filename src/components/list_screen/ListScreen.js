@@ -28,20 +28,20 @@ class ListScreen extends Component {
     updateTime = () => {
         console.log("updating time")
         let fireStore = getFirestore();
-        fireStore.collection('wireframes').doc(this.props.todoList.id).update({ time: Date.now() })
+        fireStore.collection('wireframes').doc(this.props.wireframe.id).update({ time: Date.now() })
     }
 
-    handleChange = (e) => {
-        const { target } = e;
-
-        this.setState(state => ({
-            ...state,
-            [target.id]: target.value,
-        }));
-
+    handleChange = () => {
+        
         const fireStore = getFirestore();
-        let dbitem = fireStore.collection('wireframes').doc(this.props.todoList.id);
-        dbitem.update({ [target.id]: target.value });
+        let dbitem = fireStore.collection('wireframes').doc(this.props.wireframe.id);
+        dbitem.update(
+            {
+                "name": this.state.name,
+                "owner": this.state.owner,
+                 "controls": this.state.controls,
+            });
+        // dbitem.update({ [target.id]: target.value });
     }
 
     addContainer = () => {
@@ -177,34 +177,26 @@ class ListScreen extends Component {
         }
     }
 
-    getBorderThickness = () => {
-        if(this.state.currentControl !== ''){
-            let x = document.getElementById("border_thickness_input").value;
-            this.state.currentControl.border_thickness = x;
-            console.log("border thickness");
-        }
-    }
 
-    setBorderThickness = () => {
-        // let x = document.getElementById("border_thickness_input");
-        // this.state.currentControl.style.border_thickness = x;
+    setFontSize = () => {
+
     }
 
     setNewProperties = () => {
-        this.setBorderThickness();
+        // this.setBorderThickness();
     }
 
 
 
     render() {
         const auth = this.props.auth;
-        let todoList = this.props.todoList;
-
+        let wireframe = this.props.wireframe;
+        const selectedControl = this.state.currentControl;
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
 
-        if (!todoList)
+        if (!wireframe)
             return <React.Fragment />
 
         if (!this.changedTime) {
@@ -247,6 +239,14 @@ class ListScreen extends Component {
                     </div>
                 </div>
                 <div className = "col s6 middle_component">
+                    <div className = "row"> 
+                        <input id = "name" contenteditable = "true" value = {this.state.name} type = "text" className = "col s4 push-s4" onChange = {() => {this.setName()}}></input>
+                        <label for = "name">Name</label>
+                    </div>
+                    <div className = "row"> 
+                        <input id = "owner" contenteditable = "true" value = {this.state.name} type = "text" className = "col s4 push-s4" onChange = {() => {this.setOwner()}}></input>
+                        <label for = "owner">Owner</label>
+                    </div>
                     <div className = "row">
                         {/* <div className = "col s12"> */}
                             <div id = "workspace_div" className = "default_container center-align" style = {default_container_style} >
@@ -279,10 +279,12 @@ class ListScreen extends Component {
                 </div>
                 <div className = "col s3 right_component">
                     <div className = "row center-align">Properties</div>
-                    <div className = "row center-align">temp for changing text value</div>
+                    <div className = "row center-align">
+                        <input value = {selectedControl !==''?selectedControl.value: ''} className = "col s6 push-s2"></input>
+                    </div>
                     <div className = "row center-align font_container">
                         <div className = "col s6">Font Size: </div>
-                        <input value = {this.state.currentControl.font_size} type = "text" className = "col s2 white lighten-2 font_size_input"/>
+                        <input value = {selectedControl !==''? selectedControl.font_size : ''} type = "text" className = "col s2 white lighten-2 font_size_input"/>
                     </div>
                     <div className = "row center-align background_container">
                         <div className = "col">Background: </div>
@@ -299,12 +301,12 @@ class ListScreen extends Component {
                     <div className = "row center-align border_thickness_container">
                         <div className = "col">Border Thickness: </div>
                         <input
-                        value = {this.state.currentControl.border_thickness} type = "text" className = "col s2 white lighten-2 border_thickness_input"
-                        onChange = {this.getBorderThickness()} id = "border_thickness_input"/>
+                        value = {selectedControl.border_thickness!==null?selectedControl.border_thickness: ''} type = "text" className = "col s2 white lighten-2 border_thickness_input"
+                        id = "border_thickness_input" onChange = {this.getBorderThickness()} />
                     </div>
                     <div className = "row center-align border_radius_container">
                         <div className = "col">Border Radius: </div>
-                        <input value = {this.state.currentControl.border_radius} type = "text" className = "col s2 white lighten-2 border_radius_input"/>
+                        <input value = {selectedControl !==''? selectedControl.border_radius : ''} type = "text" className = "col s2 white lighten-2 border_radius_input"/>
                     </div>
                     <div className = "row center-align">
                         <div className = "btn" onClick = {this.setNewProperties()}>Update Properties</div>
@@ -314,9 +316,23 @@ class ListScreen extends Component {
         );
     }
 
+
+    setName(){
+        console.log(this.state.name);
+        this.setState({name: document.getElementById("name").value});
+        console.log(this.state.name);
+    }
+
+    setOwner(){
+        console.log(this.state.name);
+        this.setState({owner: document.getElementById("owner").value});
+        console.log(this.state.name);
+    }
+
     getWorkspaceHeight(){
         this.setState ({height: document.getElementById("workspace_height").value});
     }
+
 
     getWorkspaceWidth = () => {
         this.setState ({width: document.getElementById("workspace_width").value});
@@ -343,6 +359,18 @@ class ListScreen extends Component {
     setWorkspaceDimensions = () => {
         this.setWorkspaceHeight();
         this.setWorkspaceWidth();
+    }
+
+
+     getBorderThickness = () => {
+    //     let temp = (document.getElementById("border_thickness_input").value);
+    //     const x = this.state.controls.slice();
+    //     let index = this.state.currentControl.key();
+    //     x[index].border_thickness = temp;
+    //     x[index].style.borderWidth = temp;
+    //     this.setStyle({
+    //         controls: x
+    //     })
     }
 }
 
@@ -377,12 +405,12 @@ const empty_control = {
 const mapStateToProps = (state, ownProps) => {
     const { id } = ownProps.match.params;
     const { wireframes } = state.firestore.data;
-    const todoList = wireframes ? wireframes[id] : null;
-    if (todoList)
-        todoList.id = id;
+    const wireframe = wireframes ? wireframes[id] : null;
+    if (wireframe)
+        wireframe.id = id;
 
     return {
-        todoList,
+        wireframe,
         auth: state.firebase.auth,
     };
 };

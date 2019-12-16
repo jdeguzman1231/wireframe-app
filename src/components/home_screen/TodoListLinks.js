@@ -11,7 +11,7 @@ class TodoListLinks extends React.Component {
         return (
             <div className="todo-lists section">
                 {wireframes && wireframes.map(todoList => (
-                    <Link to={'/todoList/' + todoList.id} key={todoList.id}>
+                    <Link to={'/wireframe/' + todoList.id} key={todoList.id}>
                         <TodoListCard todoList={todoList} />
                     </Link>
                 ))}
